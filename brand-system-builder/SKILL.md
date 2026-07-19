@@ -246,6 +246,8 @@ Purpose: Establish the factual baseline and determine what should be retained, i
 
 Purpose: Define what the brand represents and the criteria governing subsequent decisions.
 
+Use [Lifecycle foundations and governance](references/lifecycle-foundations-and-governance.md) to cover the full foundation contract and explicitly disposition every applicable item.
+
 #### Input
 
 - Project Brief.
@@ -338,6 +340,8 @@ For a pure `W` path, reuse or skip this stage unless a new direction is genuinel
 ### Stage 04 — Core Brand System
 
 Purpose: Own and complete Identity Creation by developing the G3-approved direction into the coherent, reusable core identity system defined by the tailored scope.
+
+Use [Lifecycle foundations and governance](references/lifecycle-foundations-and-governance.md) to complete the applicable visual, verbal, and experience identity dimensions.
 
 #### Input
 
@@ -585,6 +589,8 @@ For specification-only engagements, reduce this stage to a documented handoff re
 ### Stage 09 — Delivery, Governance, and Continued Evolution
 
 Purpose: Ensure the brand can be used, maintained, and evolved without hidden knowledge, then establish Delivery Freeze at G9.
+
+Use [Lifecycle foundations and governance](references/lifecycle-foundations-and-governance.md) to classify maintenance changes and track frozen decisions, deprecated assets, and downstream consumers.
 
 #### Input
 

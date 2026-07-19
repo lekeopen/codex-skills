@@ -18,6 +18,32 @@ require_file() {
   fi
 }
 
+require_exact_line() {
+  local file="$1"
+  local expected_line="$2"
+
+  if [[ ! -f "$file" ]] || ! grep -Fqx "$expected_line" "$file"; then
+    fail "missing required line in $file: $expected_line"
+  fi
+}
+
+validate_brand_runtime_reference() {
+  local skill_file="brand-system-builder/SKILL.md"
+  local reference_file="brand-system-builder/references/lifecycle-foundations-and-governance.md"
+  local reference_link='[Lifecycle foundations and governance](references/lifecycle-foundations-and-governance.md)'
+  local link_count=0
+
+  require_file "$reference_file"
+
+  if [[ -f "$skill_file" ]]; then
+    link_count="$(grep -Fc "$reference_link" "$skill_file")"
+  fi
+
+  if (( link_count < 3 )); then
+    fail "brand runtime reference must be linked from strategy, identity, and governance sections"
+  fi
+}
+
 validate_frontmatter() {
   local skill_file="$1"
 
@@ -108,9 +134,12 @@ done
 
 require_file README.md
 require_file LICENSE
+require_file .gitignore
 require_file scripts/validate-skills.sh
 require_file tests/fixtures/valid-rss.xml
 require_file tests/fixtures/valid-publish-queue.json
+require_exact_line .gitignore '/.superpowers/'
+validate_brand_runtime_reference
 
 if [[ -f scripts/validate-skills.sh ]] && ! bash -n scripts/validate-skills.sh; then
   fail 'validation entry point has invalid shell syntax'
