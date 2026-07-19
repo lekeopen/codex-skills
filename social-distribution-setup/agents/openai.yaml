@@ -1,0 +1,6 @@
+interface:
+  display_name: "Social Distribution Setup"
+  short_description: "Set up and debug RSS-driven social distribution"
+  default_prompt: "Use $social-distribution-setup to check this project's RSS and Make/Buffer social distribution setup."
+policy:
+  allow_implicit_invocation: true
