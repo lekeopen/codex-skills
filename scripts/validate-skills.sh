@@ -101,6 +101,15 @@ if ! node social-distribution-setup/scripts/inspect_publish_queue.mjs tests/fixt
   fail 'publish queue inspector rejected the valid fixture'
 fi
 
+if ! node social-distribution-setup/scripts/generate_make_notes.mjs \
+  --site https://example.test \
+  --rss https://example.test/rss.xml \
+  --platforms facebook,linkedin,x >/dev/null; then
+  fail 'Make notes generator rejected deterministic arguments'
+else
+  printf 'Make notes generator fixture passed.\n'
+fi
+
 if (( failures > 0 )); then
   printf 'Skill validation failed with %d issue(s).\n' "$failures" >&2
   exit 1

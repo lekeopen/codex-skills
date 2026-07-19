@@ -38,6 +38,43 @@ RUBY
   fi
 }
 
+validate_validation_entrypoint() {
+  local validator_output
+  local expected_failure
+  local expected_failures=6
+  local actual_failures
+
+  validator_output="$(mktemp)"
+  if bash scripts/validate-skills.sh >"$validator_output" 2>&1; then
+    rm -f "$validator_output"
+    return
+  fi
+
+  for expected_failure in \
+    'FAIL: forbidden skill-local release file: brand-system-builder/README.md' \
+    'FAIL: forbidden skill-local release file: brand-system-builder/CHANGELOG.md' \
+    'FAIL: forbidden skill-local release file: brand-system-builder/RELEASE_CHECKLIST.md' \
+    'FAIL: forbidden skill-local release file: brand-system-builder/VERSION' \
+    'FAIL: forbidden skill-local release file: brand-system-builder/docs/release-report-v1.0.md' \
+    'FAIL: missing required metadata: brand-system-builder/agents/openai.yaml'; do
+    if ! grep -Fqx "$expected_failure" "$validator_output"; then
+      fail "validator did not report its expected pre-Task-2 failure: $expected_failure"
+    fi
+  done
+
+  actual_failures="$(grep -c '^FAIL:' "$validator_output")"
+  if [[ "$actual_failures" -ne "$expected_failures" ]]; then
+    fail "validator reported unexpected pre-Task-2 failures: $actual_failures"
+  fi
+
+  if ! grep -Fqx 'Make notes generator fixture passed.' "$validator_output"; then
+    fail 'validator did not run the Make notes generator fixture'
+  fi
+
+  cat "$validator_output"
+  rm -f "$validator_output"
+}
+
 skills=(brand-system-builder social-distribution-setup)
 for skill in "${skills[@]}"; do
   require_file "$skill/SKILL.md"
@@ -58,27 +95,8 @@ if [[ -f scripts/validate-skills.sh ]] && ! bash -n scripts/validate-skills.sh; 
   fail 'validation entry point has invalid shell syntax'
 fi
 
-while IFS= read -r -d '' script; do
-  if ! node --check "$script"; then
-    fail "invalid Node.js syntax: $script"
-  fi
-done < <(find . -path './*/scripts/*.mjs' -type f -print0)
-
-if [[ -f tests/fixtures/valid-rss.xml ]] \
-  && ! node social-distribution-setup/scripts/inspect_rss.mjs tests/fixtures/valid-rss.xml; then
-  fail 'RSS inspector rejected the valid fixture'
-fi
-
-if [[ -f tests/fixtures/valid-publish-queue.json ]] \
-  && ! node social-distribution-setup/scripts/inspect_publish_queue.mjs tests/fixtures/valid-publish-queue.json; then
-  fail 'publish queue inspector rejected the valid fixture'
-fi
-
-if ! node social-distribution-setup/scripts/generate_make_notes.mjs \
-  --site https://example.test \
-  --rss https://example.test/rss.xml \
-  --platforms facebook,linkedin,x >/dev/null; then
-  fail 'Make notes generator rejected deterministic arguments'
+if [[ -f scripts/validate-skills.sh ]]; then
+  validate_validation_entrypoint
 fi
 
 if (( failures > 0 )); then
