@@ -1,0 +1,12 @@
+{
+  "generatedAt": "2026-07-18T08:00:00.000Z",
+  "items": [
+    {
+      "slug": "repository-validation",
+      "title": "Repository validation fixture",
+      "date": "2026-07-18",
+      "status": "pending",
+      "channels": ["facebook", "linkedin", "x"]
+    }
+  ]
+}

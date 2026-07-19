@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0">
+  <channel>
+    <title>Example Site</title>
+    <link>https://example.test/</link>
+    <description>Example feed for repository validation.</description>
+    <item>
+      <title>Repository validation fixture</title>
+      <link>https://example.test/posts/repository-validation</link>
+      <guid>https://example.test/posts/repository-validation</guid>
+      <pubDate>Sat, 18 Jul 2026 08:00:00 GMT</pubDate>
+      <description>A deterministic RSS item for local validation.</description>
+    </item>
+  </channel>
+</rss>
