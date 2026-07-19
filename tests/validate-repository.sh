@@ -45,6 +45,7 @@ validate_validation_entrypoint() {
   local expected_failures=6
   local actual_failures
   local validator_exit=0
+  local expected_success_summary
 
   validator_output="$(mktemp)"
   if bash scripts/validate-skills.sh >"$validator_output" 2>&1; then
@@ -63,7 +64,8 @@ validate_validation_entrypoint() {
   done
 
   if [[ "$validator_exit" -eq 0 ]]; then
-    if ! grep -Fqx 'Skill validation passed for 2 skill(s).' "$validator_output"; then
+    expected_success_summary="Skill validation passed for ${discovered_skill_count} skill(s)."
+    if ! grep -Fqx "$expected_success_summary" "$validator_output"; then
       fail 'validator exited successfully without the expected success summary'
     fi
   else
@@ -90,6 +92,11 @@ validate_validation_entrypoint() {
 }
 
 skills=(brand-system-builder social-distribution-setup)
+discovered_skill_count=0
+while IFS= read -r skill_file; do
+  discovered_skill_count=$((discovered_skill_count + 1))
+done < <(find . -mindepth 2 -maxdepth 2 -name SKILL.md -type f | sort)
+
 for skill in "${skills[@]}"; do
   require_file "$skill/SKILL.md"
   require_file "$skill/agents/openai.yaml"
