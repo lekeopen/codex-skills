@@ -41,34 +41,48 @@ RUBY
 validate_validation_entrypoint() {
   local validator_output
   local expected_failure
+  local expected_marker
   local expected_failures=6
   local actual_failures
+  local validator_exit=0
 
   validator_output="$(mktemp)"
   if bash scripts/validate-skills.sh >"$validator_output" 2>&1; then
-    rm -f "$validator_output"
-    return
+    :
+  else
+    validator_exit=$?
   fi
 
-  for expected_failure in \
-    'FAIL: forbidden skill-local release file: brand-system-builder/README.md' \
-    'FAIL: forbidden skill-local release file: brand-system-builder/CHANGELOG.md' \
-    'FAIL: forbidden skill-local release file: brand-system-builder/RELEASE_CHECKLIST.md' \
-    'FAIL: forbidden skill-local release file: brand-system-builder/VERSION' \
-    'FAIL: forbidden skill-local release file: brand-system-builder/docs/release-report-v1.0.md' \
-    'FAIL: missing required metadata: brand-system-builder/agents/openai.yaml'; do
-    if ! grep -Fqx "$expected_failure" "$validator_output"; then
-      fail "validator did not report its expected pre-Task-2 failure: $expected_failure"
+  for expected_marker in \
+    'RSS inspector fixture passed.' \
+    'Publish queue inspector fixture passed.' \
+    'Make notes generator fixture passed.'; do
+    if ! grep -Fqx "$expected_marker" "$validator_output"; then
+      fail "validator did not report fixture success: $expected_marker"
     fi
   done
 
-  actual_failures="$(grep -c '^FAIL:' "$validator_output")"
-  if [[ "$actual_failures" -ne "$expected_failures" ]]; then
-    fail "validator reported unexpected pre-Task-2 failures: $actual_failures"
-  fi
+  if [[ "$validator_exit" -eq 0 ]]; then
+    if ! grep -Fqx 'Skill validation passed for 2 skill(s).' "$validator_output"; then
+      fail 'validator exited successfully without the expected success summary'
+    fi
+  else
+    for expected_failure in \
+      'FAIL: forbidden skill-local release file: brand-system-builder/README.md' \
+      'FAIL: forbidden skill-local release file: brand-system-builder/CHANGELOG.md' \
+      'FAIL: forbidden skill-local release file: brand-system-builder/RELEASE_CHECKLIST.md' \
+      'FAIL: forbidden skill-local release file: brand-system-builder/VERSION' \
+      'FAIL: forbidden skill-local release file: brand-system-builder/docs/release-report-v1.0.md' \
+      'FAIL: missing required metadata: brand-system-builder/agents/openai.yaml'; do
+      if ! grep -Fqx "$expected_failure" "$validator_output"; then
+        fail "validator did not report its expected pre-Task-2 failure: $expected_failure"
+      fi
+    done
 
-  if ! grep -Fqx 'Make notes generator fixture passed.' "$validator_output"; then
-    fail 'validator did not run the Make notes generator fixture'
+    actual_failures="$(grep -c '^FAIL:' "$validator_output")"
+    if [[ "$actual_failures" -ne "$expected_failures" ]]; then
+      fail "validator reported unexpected pre-Task-2 failures: $actual_failures"
+    fi
   fi
 
   cat "$validator_output"

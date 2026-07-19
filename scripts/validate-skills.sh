@@ -95,10 +95,14 @@ done
 
 if ! node social-distribution-setup/scripts/inspect_rss.mjs tests/fixtures/valid-rss.xml; then
   fail 'RSS inspector rejected the valid fixture'
+else
+  printf 'RSS inspector fixture passed.\n'
 fi
 
 if ! node social-distribution-setup/scripts/inspect_publish_queue.mjs tests/fixtures/valid-publish-queue.json; then
   fail 'publish queue inspector rejected the valid fixture'
+else
+  printf 'Publish queue inspector fixture passed.\n'
 fi
 
 if ! node social-distribution-setup/scripts/generate_make_notes.mjs \
