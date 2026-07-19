@@ -31,16 +31,54 @@ validate_brand_runtime_reference() {
   local skill_file="brand-system-builder/SKILL.md"
   local reference_file="brand-system-builder/references/lifecycle-foundations-and-governance.md"
   local reference_link='[Lifecycle foundations and governance](references/lifecycle-foundations-and-governance.md)'
-  local link_count=0
 
   require_file "$reference_file"
 
-  if [[ -f "$skill_file" ]]; then
-    link_count="$(grep -Fc "$reference_link" "$skill_file")"
+  if [[ -f "$skill_file" ]] && ! ruby - "$skill_file" "$reference_link" <<'RUBY'
+skill_file, reference_link = ARGV
+contents = File.read(skill_file)
+stage_headings = [
+  'Stage 02 — Brand Strategy Foundation',
+  'Stage 04 — Core Brand System',
+  'Stage 09 — Delivery, Governance, and Continued Evolution'
+]
+
+sections = {}
+current_heading = nil
+contents.each_line do |line|
+  if (match = line.match(/^### (Stage \d{2} — .+)\r?$/))
+    current_heading = match[1]
+    sections[current_heading] = +''
+  elsif current_heading
+    sections[current_heading] << line
+  end
+end
+
+stage_headings.each do |heading|
+  abort "missing stage section: #{heading}" unless sections.key?(heading)
+  abort "missing runtime reference link in #{heading}" unless sections.fetch(heading).include?(reference_link)
+end
+RUBY
+  then
+    fail "brand runtime reference must be linked inside Stage 02, Stage 04, and Stage 09"
   fi
 
-  if (( link_count < 3 )); then
-    fail "brand runtime reference must be linked from strategy, identity, and governance sections"
+  if [[ -f "$reference_file" ]] && ! ruby - "$reference_file" <<'RUBY'
+reference_file = ARGV.fetch(0)
+headings = File.read(reference_file).scan(/^## (.+?)\r?$/).flatten
+required_headings = [
+  'Brand foundation contract',
+  'Identity coverage contract',
+  'Production maintenance contract',
+  'Change classification',
+  'State validity and consumer tracking'
+]
+
+missing = required_headings - headings
+abort "missing contract headings: #{missing.join(', ')}" unless missing.empty?
+RUBY
+  then
+    fail "brand runtime reference is missing required contract headings"
   fi
 }
 
