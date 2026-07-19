@@ -80,7 +80,7 @@ Classify every proposed or observed maintenance change before acting:
 4. **Temporary exception**: time-bounded, owned, explicitly approved, and recorded with expiry and reconciliation conditions.
 5. **Rejected drift**: an unapproved deviation that must not become precedent; correct it against the frozen baseline.
 
-## State, validity, and consumer tracking
+## State validity and consumer tracking
 
 In addition to the workflow's fact, decision, assumption, candidate, recommendation, and open-question states, distinguish:
 
