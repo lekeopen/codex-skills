@@ -1,0 +1,50 @@
+# Codex Skills
+
+Reusable Codex skills maintained by [lekeopen](https://github.com/lekeopen). Each skill is an independently installable top-level directory.
+
+## Skills
+
+| Skill | Purpose |
+|---|---|
+| [`brand-system-builder`](brand-system-builder/) | Establish, upgrade, integrate, freeze, and govern a brand system. |
+| [`social-distribution-setup`](social-distribution-setup/) | Set up and troubleshoot RSS-driven social distribution with Make.com and Buffer. |
+
+## Installation
+
+Clone the repository, then copy only the skill you need into your Codex skills directory.
+
+Install Brand System Builder:
+
+```bash
+git clone https://github.com/lekeopen/codex-skills.git
+mkdir -p ~/.codex/skills
+cp -R codex-skills/brand-system-builder ~/.codex/skills/brand-system-builder
+```
+
+Install Social Distribution Setup:
+
+```bash
+git clone https://github.com/lekeopen/codex-skills.git
+mkdir -p ~/.codex/skills
+cp -R codex-skills/social-distribution-setup ~/.codex/skills/social-distribution-setup
+```
+
+Start a new Codex task after installation so the skill catalog refreshes.
+
+## Validation
+
+From the repository root, run:
+
+```bash
+bash scripts/validate-skills.sh
+```
+
+The repository-level contract can also be checked with `bash tests/validate-repository.sh`.
+
+## Adding skills
+
+Add each future skill as a top-level sibling directory whose name matches the `name` in its `SKILL.md`. Keep only runtime instructions and resources inside the skill package; place repository-wide documentation at the repository root.
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md). This repository is licensed under the [MIT License](LICENSE).

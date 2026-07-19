@@ -3,12 +3,6 @@ name: brand-system-builder
 description: Use when establishing, upgrading, integrating, formalizing, freezing, or governing a brand system across its lifecycle, including new brands, existing brands, and brands being adopted by an existing website.
 ---
 
-<!--
-Status: Release Candidate: Ready; not published
-Version: v1
-Source Task: Task 04 · SKILL.md Design
--->
-
 # Brand System Builder
 
 ## Purpose
