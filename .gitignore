@@ -9,5 +9,9 @@ Thumbs.db
 *.swo
 *~
 
+# Python
+__pycache__/
+*.pyc
+
 # Local planning and SDD scratch artifacts
 /.superpowers/

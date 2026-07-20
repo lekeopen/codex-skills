@@ -1,0 +1,6 @@
+interface:
+  display_name: "图片页合并为 A4 PDF"
+  short_description: "Create verified A4 PDFs with optional OCR"
+  default_prompt: "Use $image-pages-to-a4-pdf to order these page images and create a verified A4 PDF."
+policy:
+  allow_implicit_invocation: true
