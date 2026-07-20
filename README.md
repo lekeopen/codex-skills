@@ -8,6 +8,7 @@ Reusable Codex skills maintained by [lekeopen](https://github.com/lekeopen). Eac
 |---|---|
 | [`brand-system-builder`](brand-system-builder/) | Establish, upgrade, integrate, freeze, and govern a brand system. |
 | [`social-distribution-setup`](social-distribution-setup/) | Set up and troubleshoot RSS-driven social distribution with Make.com and Buffer. |
+| [`wechat-webview-font-sizing`](wechat-webview-font-sizing/) | Diagnose and fix font scaling problems in the WeChat embedded browser. |
 
 ## Installation
 
@@ -33,6 +34,12 @@ Install Social Distribution Setup:
 
 ```bash
 cp -R social-distribution-setup "${CODEX_HOME:-$HOME/.codex}/skills/social-distribution-setup"
+```
+
+Install WeChat WebView Font Sizing:
+
+```bash
+cp -R wechat-webview-font-sizing "${CODEX_HOME:-$HOME/.codex}/skills/wechat-webview-font-sizing"
 ```
 
 Start a new Codex task after installation so the skill catalog refreshes.

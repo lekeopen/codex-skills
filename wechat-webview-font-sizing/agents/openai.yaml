@@ -1,0 +1,6 @@
+interface:
+  display_name: "微信网页字体兼容"
+  short_description: "Diagnose and fix WeChat WebView font scaling issues"
+  default_prompt: "Use $wechat-webview-font-sizing to audit and fix this site inside WeChat."
+policy:
+  allow_implicit_invocation: true
