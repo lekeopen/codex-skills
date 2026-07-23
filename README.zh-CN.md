@@ -12,6 +12,7 @@
 | [`social-distribution-setup`](social-distribution-setup/) | 搭建并排查基于 RSS、Make.com 和 Buffer 的多平台内容分发流程。 |
 | [`wechat-webview-font-sizing`](wechat-webview-font-sizing/) | 诊断并修复微信内置浏览器中的字体缩放问题。 |
 | [`image-pages-to-a4-pdf`](image-pages-to-a4-pdf/) | 按顺序整理扫描图片，生成经过验证的 A4 PDF，并可选择添加 OCR。 |
+| [`evaluating-open-source-tools`](evaluating-open-source-tools/) | 分阶段实测开源工具，并基于证据判断是否值得采用。 |
 
 ## 环境要求
 
@@ -63,6 +64,12 @@ cp -R wechat-webview-font-sizing "${CODEX_HOME:-$HOME/.codex}/skills/wechat-webv
 
 ```bash
 cp -R image-pages-to-a4-pdf "${CODEX_HOME:-$HOME/.codex}/skills/image-pages-to-a4-pdf"
+```
+
+安装开源工具评估 skill：
+
+```bash
+cp -R evaluating-open-source-tools "${CODEX_HOME:-$HOME/.codex}/skills/evaluating-open-source-tools"
 ```
 
 安装完成后，请新建一个 Codex 任务，使 skill 列表重新加载。

@@ -12,6 +12,7 @@ Reusable Codex skills maintained by [lekeopen](https://github.com/lekeopen). Eac
 | [`social-distribution-setup`](social-distribution-setup/) | Set up and troubleshoot RSS-driven social distribution with Make.com and Buffer. |
 | [`wechat-webview-font-sizing`](wechat-webview-font-sizing/) | Diagnose and fix font scaling problems in the WeChat embedded browser. |
 | [`image-pages-to-a4-pdf`](image-pages-to-a4-pdf/) | Order scanned page images and create verified A4 PDFs with optional OCR. |
+| [`evaluating-open-source-tools`](evaluating-open-source-tools/) | Test open-source tools in stages and make evidence-backed adoption decisions. |
 
 ## Prerequisites
 
@@ -68,6 +69,12 @@ Install Image Pages to A4 PDF:
 
 ```bash
 cp -R image-pages-to-a4-pdf "${CODEX_HOME:-$HOME/.codex}/skills/image-pages-to-a4-pdf"
+```
+
+Install Evaluating Open Source Tools:
+
+```bash
+cp -R evaluating-open-source-tools "${CODEX_HOME:-$HOME/.codex}/skills/evaluating-open-source-tools"
 ```
 
 Start a new Codex task after installation so the skill catalog refreshes.
